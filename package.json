@@ -1,0 +1,39 @@
+{
+  "name": "droppy",
+  "version": "1.0.0",
+  "description": "Simple, accessible dropdown menus",
+  "main": "dist/droppy.js",
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "prebuild": "npm run clean",
+    "build": "webpack && cross-env NODE_ENV=production webpack",
+    "prestart": "npm run clean",
+    "start": "webpack --watch --progress --colors",
+    "test": "eslint src/**"
+  },
+  "author": {
+    "name": "Ed Rivas",
+    "url": "http://hello.jerivas.com"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/jerivas/droppy"
+  },
+  "devDependencies": {
+    "babel-core": "~6.24.0",
+    "babel-eslint": "~7.2.1",
+    "babel-loader": "~6.4.1",
+    "babel-plugin-transform-class-properties": "~6.23.0",
+    "babel-plugin-transform-object-rest-spread": "~6.23.0",
+    "babel-preset-es2015": "~6.24.0",
+    "cross-env": "~4.0.0",
+    "eslint": "~3.19.0",
+    "eslint-config-airbnb-base": "~11.1.2",
+    "eslint-loader": "~1.7.1",
+    "eslint-plugin-import": "~2.2.0",
+    "file-loader": "~0.11.0",
+    "json-loader": "~0.5.4",
+    "webpack": "~2.3.2"
+  }
+}

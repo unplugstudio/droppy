@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Droppy</title>
+
+	<style>
+		html {
+			box-sizing: border-box;
+			font-family: sans-serif;
+		}
+
+		*,
+		*::before,
+		*::after {
+			box-sizing: inherit;
+		}
+
+		.dropdown {
+			/* Required styles */
+			position: relative;
+		}
+
+		[role="menu"] {
+			/* Required styles */
+			left: 0;
+			position: absolute;
+			top: 100%;
+			visibility: hidden;
+
+			/* Appearance styles */
+			background-color: #fff;
+			border: solid 1px #ccc;
+			list-style-type: none;
+			margin: 0;
+			min-width: 12rem;
+			padding: 0;
+		}
+
+		/* Nested dropdowns */
+		[role="menu"] [role="menu"] {
+			left: 100%;
+			top: 0;
+		}
+
+		[role="menu"] [data-toggle="dropdown"]:after {
+			content: "\25b6";
+			float: right;
+			margin-right: -0.5rem;
+		}
+
+		[role="menu"] input {
+			display: block;
+			width: 90%;
+			margin: 0.25rem 5%;
+		}
+
+		[role=menu] a,
+		[role="menu"] [data-toggle="dropdown"] {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			background: none;
+			border: 0;
+			color: inherit;
+			cursor: pointer;
+			display: block;
+			font-family: sans-serif;
+			font-size: 1rem;
+			margin: 0;
+			padding: 0.25rem 1rem;
+			text-align: left;
+			text-decoration: none;
+			width: 100%;
+		}
+
+		[role=menu] a:hover,
+		[role=menu] a:focus,
+		[role="menu"] [data-toggle="dropdown"]:hover,
+		[role="menu"] [data-toggle="dropdown"]:focus,
+		[role="menu"] .show > [data-toggle="dropdown"] {
+			background-color: navy;
+			color: #fff;
+		}
+
+		[role="menu"][aria-expanded="true"] {
+			visibility: visible;
+		}
+	</style>
+
+</head>
+<body>
+
+	<h1>Droppy</h1>
+	<p>Simple, accessible, nested dropdow menus. Inspired by Bootstrap dropdowns.</p>
+	<p>Supports TAB navigation, Space/Enter to toggle the dropdowns, Esc to close, and up/down arrow keys. All positioning is done via CSS, so it can easily be converted to accordions / drawers for mobile users.</p>
+	<p>No dependencies. Less than 5 KB minified, less than 2 KB gzipped.</p>
+
+	<div class="dropdown">
+		<button data-toggle="dropdown">
+			<span class="derp">Click me!</span>
+		</button>
+		<ul role="menu">
+			<li role="menuitem">
+				<input type="text" placeholder="Input demo...">
+			</li>
+			<li role="menuitem"><a href="#">Item 1</a></li>
+			<li role="menuitem"><a href="#">Item 2</a></li>
+			<li role="menuitem"><a href="#">Item 3</a></li>
+			<li class="dropdown">
+				<button data-toggle="dropdown">	Dropdown 2</button>
+				<ul role="menu">
+					<li role="menuitem"><a href="#">Item 1</a></li>
+					<li role="menuitem"><a href="#">Item 2</a></li>
+					<li role="menuitem"><a href="#">Item 3</a></li>
+					<li class="dropdown">
+						<button data-toggle="dropdown">Dropdown 3</button>
+						<ul role="menu">
+							<li role="menuitem"><a href="#">Item 1</a></li>
+							<li role="menuitem"><a href="#">Item 2</a></li>
+							<li role="menuitem"><a href="#">Item 3</a></li>
+							<li role="menuitem"><a href="#">Item 4</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<script src="dist/droppy.js"></script>
+	<script>
+		droppy.init();
+	</script>
+
+</body>
+</html>
