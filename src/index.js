@@ -1,7 +1,7 @@
-const SHOW_EVENT = 'show.dropdown';
-const SHOWN_EVENT = 'shown.dropdown';
-const HIDE_EVENT = 'hide.dropdown';
-const HIDDEN_EVENT = 'hidden.dropdown';
+const SHOW_EVENT = 'show.droppy';
+const SHOWN_EVENT = 'shown.droppy';
+const HIDE_EVENT = 'hide.droppy';
+const HIDDEN_EVENT = 'hidden.droppy';
 
 const SHOW_CLASS = 'show';
 
@@ -42,6 +42,7 @@ export default class Droppy {
 			document.addEventListener('click', this.clickHandler);
 		}
 		element.Droppy = this;
+		return this;
 	}
 
 	/**

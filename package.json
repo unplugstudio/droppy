@@ -1,7 +1,7 @@
 {
   "name": "droppy",
-  "version": "1.0.0",
-  "description": "Simple, accessible dropdown menus",
+  "version": "1.1.0",
+  "description": "Simple, accessible, nested dropdown menus",
   "main": "dist/droppy.js",
   "scripts": {
     "clean": "rm -rf dist/*",
