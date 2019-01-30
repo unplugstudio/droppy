@@ -1,15 +1,15 @@
-/* global __dirname, require, module*/
+/* global __dirname, require, module */
 
-const path = require('path');
-const pkg = require('./package.json');
+const path = require('path')
+const pkg = require('./package.json')
 
 module.exports = (env, { mode }) => ({
   entry: {
     [pkg.name]: './src/index.js'
   },
-  devtool:  mode === 'production' ? 'source-map' : 'inline-source-map',
+  devtool: mode === 'production' ? 'source-map' : 'inline-source-map',
   output: {
-    path: __dirname + '/lib',
+    path: path.resolve(__dirname, '/lib'),
     filename: mode === 'production' ? '[name].min.js' : '[name].js',
     library: pkg.name,
     libraryTarget: 'umd',

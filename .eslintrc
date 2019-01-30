@@ -1,5 +1,4 @@
 {
-
   "env": {
     "browser": true,
     "es6": true,
@@ -21,10 +20,5 @@
 
   "parser": "babel-eslint",
 
-  "plugins": [
-
-  ],
-
-  "rules": {
-  }
+  "extends": "prettier-standard"
 }
