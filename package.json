@@ -1,5 +1,5 @@
 {
-  "name": "droppy",
+  "name": "@unplugstudio/droppy",
   "version": "2.0.0",
   "description": "Simple, accessible, nested dropdown menus",
   "main": "lib/droppy.js",
