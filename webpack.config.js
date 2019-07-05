@@ -9,7 +9,7 @@ module.exports = (env, { mode }) => ({
   },
   devtool: mode === 'production' ? 'source-map' : 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, '/lib'),
+    path: path.resolve(__dirname, 'lib'),
     filename: mode === 'production' ? '[name].min.js' : '[name].js',
     library: pkg.name,
     libraryTarget: 'umd',
