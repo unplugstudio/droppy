@@ -1,133 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Droppy</title>
+  <meta charset="UTF-8">
+  <title>Droppy</title>
 
-	<style>
-		html {
-			box-sizing: border-box;
-			font-family: sans-serif;
-		}
+  <style>
+    /* Required styles */
+    .wrapper {
+      position: relative;
+    }
+    .dropdown {
+      left: 0;
+      position: absolute;
+      top: 100%;
+      display: none;
+    }
+    .dropdown.open {
+      display: block;
+    }
 
-		*,
-		*::before,
-		*::after {
-			box-sizing: inherit;
-		}
+    /* Demo styles */
+    html {
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
 
-		.dropdown {
-			/* Required styles */
-			position: relative;
-		}
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit;
+    }
 
-		[role="menu"] {
-			/* Required styles */
-			left: 0;
-			position: absolute;
-			top: 100%;
-			visibility: hidden;
+    .dropdown {
+      background-color: #fff;
+      border: solid 1px #ccc;
+      list-style-type: none;
+      margin: 0;
+      min-width: 12rem;
+      padding: 0;
+    }
 
-			/* Appearance styles */
-			background-color: #fff;
-			border: solid 1px #ccc;
-			list-style-type: none;
-			margin: 0;
-			min-width: 12rem;
-			padding: 0;
-		}
+    .dropdown .dropdown {
+      left: 100%;
+      top: 0;
+    }
 
-		/* Nested dropdowns */
-		[role="menu"] [role="menu"] {
-			left: 100%;
-			top: 0;
-		}
+    .dropdown input {
+      display: block;
+      width: 90%;
+      margin: 0.25rem 5%;
+    }
 
-		[role="menu"] [data-toggle="dropdown"]:after {
-			content: "\25b6";
-			float: right;
-			margin-right: -0.5rem;
-		}
+    .dropdown a,
+    .dropdown [data-toggle="dropdown"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: none;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      display: block;
+      font-family: sans-serif;
+      font-size: 1rem;
+      margin: 0;
+      padding: 0.25rem 1rem;
+      text-align: left;
+      text-decoration: none;
+      width: 100%;
+    }
 
-		[role="menu"] input {
-			display: block;
-			width: 90%;
-			margin: 0.25rem 5%;
-		}
-
-		[role=menu] a,
-		[role="menu"] [data-toggle="dropdown"] {
-			-webkit-appearance: none;
-			-moz-appearance: none;
-			appearance: none;
-			background: none;
-			border: 0;
-			color: inherit;
-			cursor: pointer;
-			display: block;
-			font-family: sans-serif;
-			font-size: 1rem;
-			margin: 0;
-			padding: 0.25rem 1rem;
-			text-align: left;
-			text-decoration: none;
-			width: 100%;
-		}
-
-		[role=menu] a:hover,
-		[role=menu] a:focus,
-		[role="menu"] [data-toggle="dropdown"]:hover,
-		[role="menu"] [data-toggle="dropdown"]:focus,
-		[role="menu"] .show > [data-toggle="dropdown"] {
-			background-color: navy;
-			color: #fff;
-		}
-
-		[role="menu"][aria-expanded="true"] {
-			visibility: visible;
-		}
-	</style>
+    .dropdown a:hover,
+    .dropdown a:focus,
+    .dropdown [data-toggle="dropdown"]:hover,
+    .dropdown [data-toggle="dropdown"]:focus,
+    .dropdown [data-toggle="dropdown"][aria-expanded="true"] {
+      background-color: navy;
+      color: #fff;
+    }
+  </style>
 
 </head>
 <body>
 
-	<h1>Droppy</h1>
+  <h1>Droppy</h1>
 
-	<div class="dropdown">
-		<button data-toggle="dropdown">
-			<span class="derp">Click me!</span>
-		</button>
-		<ul role="menu">
-			<li role="menuitem">
-				<input type="text" placeholder="Input demo...">
-			</li>
-			<li role="menuitem"><a href="#">Item 1</a></li>
-			<li role="menuitem"><a href="#">Item 2</a></li>
-			<li role="menuitem"><a href="#">Item 3</a></li>
-			<li class="dropdown">
-				<button data-toggle="dropdown">	Dropdown 2</button>
-				<ul role="menu">
-					<li role="menuitem"><a href="#">Item 1</a></li>
-					<li role="menuitem"><a href="#">Item 2</a></li>
-					<li role="menuitem"><a href="#">Item 3</a></li>
-					<li class="dropdown">
-						<button data-toggle="dropdown">Dropdown 3</button>
-						<ul role="menu">
-							<li role="menuitem"><a href="#">Item 1</a></li>
-							<li role="menuitem"><a href="#">Item 2</a></li>
-							<li role="menuitem"><a href="#">Item 3</a></li>
-							<li role="menuitem"><a href="#">Item 4</a></li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
+  <div class="wrapper">
+    <button data-toggle="dropdown" aria-controls="dropdown-1">
+      Dropdown 1
+    </button>
+    <ul id="dropdown-1" class="dropdown">
+      <li>
+        <input type="text" placeholder="Input demo...">
+      </li>
+      <li><a href="#">Item 1</a></li>
+      <li><a href="#">Item 2</a></li>
+      <li class="wrapper">
+        <button data-toggle="dropdown" aria-controls="dropdown-2">Dropdown 2</button>
+        <ul id="dropdown-2" class="dropdown">
+          <li><a href="#">Item 1</a></li>
+          <li class="wrapper">
+            <button data-toggle="dropdown" aria-controls="dropdown-3">Dropdown 3</button>
+            <ul id="dropdown-3" class="dropdown">
+              <li><a href="#">Item 1</a></li>
+              <li><a href="#">Item 2</a></li>
+              <li><a href="#">Item 3</a></li>
+              <li><a href="#">Item 4</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Item 2</a></li>
+          <li><a href="#">Item 3</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Item 3</a></li>
+    </ul>
+  </div>
 
-	<script src="lib/droppy.js"></script>
-	<script>
-		droppy.init();
-	</script>
+  <script src="lib/droppy.js"></script>
+  <script>
+    droppy.init();
+
+    const logEvent = event => console.log(event)
+
+    ['show', 'shown', 'hide', 'hidden'].forEach(eventName => {
+      document.addEventListener(`${eventName}.droppy`, logEvent)
+    })
+  </script>
 
 </body>
 </html>

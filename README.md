@@ -2,9 +2,9 @@
 
 Simple, accessible, nested dropdow menus. Inspired by Bootstrap dropdowns.
 
-Supports TAB navigation, Space/Enter to toggle the dropdowns, Esc to close, and up/down arrow keys. All positioning is done via CSS, so it can easily be converted to accordions / drawers for mobile users.
+Supports TAB navigation, Space/Enter to toggle the dropdowns, Esc to close. All positioning is done via CSS, so it can easily be converted to accordions / drawers for mobile users.
 
-*No dependencies. Less than 5 KB minified, less than 2 KB gzipped.*
+*No dependencies. Less than 4 KB minified, less than 2 KB gzipped.*
 
 Open `demo.html` for a complete demo.
 
@@ -33,14 +33,14 @@ import Droppy, { init } from 'droppy'
 ## Required markup
 
 ```html
-<div>
-  <button data-toggle="dropdown">Dropdown</button>
-  <ul role="menu">
-    <li><a href="#">Item 1</a></li>
-    <li><a href="#">Item 2</a></li>
-    <li><a href="#">Item 3</a></li>
-  </ul>
-</div>
+<button data-toggle="dropdown" aria-controls="dropdown-1">
+  Open dropdown
+</button>
+<ul id="dropdown-1">
+  <li><a href="#">Item 1</a></li>
+  <li><a href="#">Item 2</a></li>
+  <li><a href="#">Item 3</a></li>
+</ul>
 
 <script>
   // Single element
@@ -52,13 +52,14 @@ import Droppy, { init } from 'droppy'
 </script>
 ```
 
-- Wrap the `button` and `ul` with a `div` (or any other element)
 - Add `data-toggle="dropdown"` to the `button`
-- Add `role="menu"` to the `ul`
+- Add an id to the `<ul>` and pass it to `aria-controls` on the button
 - Initialize Droppy on the `button`
-- When the dropdown is toggled, the class `open` will be added to the parent `div` (you can pass a custom class to `init` and `Droppy` as the second argument)
-- Optional: Attach event listeners to the parent `div` and listen for:
+- When the dropdown is toggled, the class `open` will be added to the dropdown (you can pass a custom class to `init` and `Droppy` as the second argument)
+- Also the `aria-expanded` attribute will be toggled on the button
+- Optional: Attach event listeners to the document and listen for:
   - `show.droppy`
   - `shown.droppy`
   - `hide.droppy`
   - `hidden.droppy`
+  On each event you'll have access to the dropdown as `event.target` and the button as `event.detail.relatedTarget`

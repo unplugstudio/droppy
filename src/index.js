@@ -3,7 +3,7 @@ const SHOWN_EVENT = 'shown.droppy'
 const HIDE_EVENT = 'hide.droppy'
 const HIDDEN_EVENT = 'hidden.droppy'
 
-const SHOW_CLASS = 'show'
+const SHOW_CLASS = 'open'
 
 /* Instantiate and dispatch a custom event
  * @private
@@ -27,27 +27,37 @@ export default class Droppy {
    * Initialize the Droppy instance.
    * Will attach a `Droppy` property to the `element`.
    * @param  {HTMLElement} element Node that will act as dropdown toggle
-   * @param  {String} [showClass]  Classname assigned to the parent on show
+   * @param  {String} [showClass]  Class name assigned to the dropdown on show
    * @return {Object}              The new Droppy instance
    */
   constructor(element, showClass = SHOW_CLASS) {
     this.element = element
     this.showClass = showClass
-    this.parent = element.parentNode
-    this.menu = this.parent.querySelector('[role="menu"]')
+    this.dropdown = document.getElementById(
+      element.getAttribute('aria-controls')
+    )
     this.relatedTarget = null
     this.isOpen = false
 
-    if (!('Droppy' in element)) {
+    if (!this.dropdown) {
+      console.error(
+        `Could not find related dropdown for ${
+          element.textContent
+        }. Make sure the aria-controls attribute is set.`
+      )
+    }
+
+    if (!('droppy' in element)) {
       document.addEventListener('click', this.clickHandler)
     }
-    element.Droppy = this
+
+    this.element.setAttribute('aria-expanded', false)
+    element.droppy = this
     return this
   }
 
   /**
    * Handle keyboard input for enhanced dropdown navigation.
-   * Allows using 'Esc' to close the dropdown, and the up/down arrow keys to move.
    * @param  {KeyboardEvent} event
    */
   keyHandler = event => {
@@ -59,23 +69,11 @@ export default class Droppy {
     event.preventDefault()
 
     // Esc key (closes dropdown)
-    const hasOpenSubmenus = this.menu.querySelector('[aria-expanded="true"]')
-    if (event.key === 'Escape' && this.isOpen && !hasOpenSubmenus) {
+    if (event.key === 'Escape' && this.isOpen) {
       this.relatedTarget = null
       this.hide()
       this.element.focus()
-      return
     }
-
-    // Up / down arrows (behaves as Shift + TAB / TAB)
-    const items = [...this.menu.querySelectorAll('a, button, input, textarea')]
-    if (!items.length) return
-    let index = items.indexOf(event.target)
-
-    if (event.key === 'ArrowUp' && index > 0) index--
-    if (event.key === 'ArrowDown' && index < items.length - 1) index++
-    if (index < 0) index = 0
-    items[index].focus()
   }
 
   /**
@@ -87,8 +85,8 @@ export default class Droppy {
   clickHandler = event => {
     if (event.button !== 0) return // Bail on anything that isn't a left-click
 
-    const { element, isOpen, menu } = this
-    const target = event.target
+    const { element, isOpen, dropdown } = this
+    const { target } = event
 
     // Handle clicks inside toggle element
     if (target === element) {
@@ -99,9 +97,9 @@ export default class Droppy {
       // Handle clicks elsewhere in the page when the dropdown is open
       // (except when clicking nested dropdowns or form inputs)
     } else if (isOpen) {
-      const targetIsToggle = target.dataset.toggle === 'dropdown'
-      const targetIsInput = target.nodeName.match('INPUT|TEXTAREA')
-      if ((targetIsToggle || targetIsInput) && menu.contains(target)) return
+      const isDroppy = target.droppy
+      const isInput = target.nodeName.match('INPUT|TEXTAREA')
+      if ((isDroppy || isInput) && dropdown.contains(target)) return
 
       this.relatedTarget = null
       this.hide()
@@ -113,11 +111,11 @@ export default class Droppy {
    * Toggles classNames, dispatches events, and sets up keypress handlers.
    */
   show = () => {
-    const { keyHandler, menu, showClass, parent, relatedTarget } = this
-    dispatchEvent(SHOW_EVENT, parent, { relatedTarget })
-    parent.classList.add(showClass)
-    menu.setAttribute('aria-expanded', true)
-    dispatchEvent(SHOWN_EVENT, parent, { relatedTarget })
+    const { keyHandler, element, dropdown, showClass, relatedTarget } = this
+    dispatchEvent(SHOW_EVENT, dropdown, { relatedTarget })
+    dropdown.classList.add(showClass)
+    element.setAttribute('aria-expanded', true)
+    dispatchEvent(SHOWN_EVENT, dropdown, { relatedTarget })
     document.addEventListener('keydown', keyHandler)
     this.isOpen = true
   }
@@ -127,11 +125,11 @@ export default class Droppy {
    * Toggles classNames, dispatches events, and removes keypress handlers.
    */
   hide = () => {
-    const { keyHandler, menu, showClass, parent, relatedTarget } = this
-    dispatchEvent(HIDE_EVENT, parent, { relatedTarget })
-    parent.classList.remove(showClass)
-    menu.setAttribute('aria-expanded', false)
-    dispatchEvent(HIDDEN_EVENT, parent, { relatedTarget })
+    const { keyHandler, element, dropdown, showClass, relatedTarget } = this
+    dispatchEvent(HIDE_EVENT, dropdown, { relatedTarget })
+    dropdown.classList.remove(showClass)
+    element.setAttribute('aria-expanded', false)
+    dispatchEvent(HIDDEN_EVENT, dropdown, { relatedTarget })
     document.removeEventListener('keydown', keyHandler)
     this.isOpen = false
   }
@@ -141,11 +139,7 @@ export default class Droppy {
    * Will decide if the menu should be shown or hidden depending on current state.
    */
   toggle = () => {
-    if (this.parent.classList.contains(this.showClass) && this.isOpen) {
-      this.hide()
-    } else {
-      this.show()
-    }
+    this.isOpen ? this.hide() : this.show()
   }
 }
 
