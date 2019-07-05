@@ -8,13 +8,13 @@
     "dev": "webpack --progress --colors --watch --mode development"
   },
   "author": {
-    "name": "Ed Rivas",
-    "url": "http://hello.jerivas.com"
+    "name": "Unplug Studio",
+    "url": "http://unplug.studio"
   },
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/jerivas/droppy"
+    "url": "https://github.com/unplugstudio/droppy"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
